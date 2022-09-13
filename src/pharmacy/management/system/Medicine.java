@@ -4,11 +4,20 @@
  */
 package pharmacy.system;
 
+import Models.DbConnection;
 import java.sql.Statement;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import net.proteanit.sql.DbUtils;
+//import net.proteanit.sql.DbUtils;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
 public final class Medicine extends javax.swing.JFrame {
 
     /**
@@ -16,28 +25,97 @@ public final class Medicine extends javax.swing.JFrame {
      */
     public Medicine() {
         initComponents();
-        selectMed();
+        showMedicineList();
+        getCompanyList();
     }
 
-    Connection Con = null;
-    Statement St = null, St1=null;
-    ResultSet Rs = null, Rs1=null;
-    java.util.Date FDate,EDate;
-    java.sql.Date MyFabDate, MyExpDate;
-    
+    DbConnection dbconn = new DbConnection();
+    Connection Con = dbconn.getDbConnection();
+
+//    Statement St = null, St1 = null;
+//    ResultSet Rs = null, rs = null;
+//    java.util.Date FDate, EDate;
+    String selectedMedID = "";
+
     @SuppressWarnings("unchecked")
-public void selectMed()
-{
-    try{
-    Con = DriverManager.get Connection("jdbc:derby://localhost:1527/Pharmadb","User1","1234");
-    St1 = Con.createStatement();
-    Rs1 = St1.executeQuery("Select * from User1.MEDICINETBL");
-    MedicineTable.setMode1(DbUtils.resultSetToTableMode1(Rs));
-    }catch(SQLException e)
-     {
-        e.printStackTrace();
-    }    
-}
+//    public void selectMed() {
+//        try {
+////            Con = DriverManager.get Connection("jdbc:derby://localhost:1527/Pharmadb", "User1", "1234");
+//            St1 = Con.createStatement();
+//            rs = St1.executeQuery("Select * from User1.MEDICINETBL");
+//
+//            DefaultTableModel model = (DefaultTableModel) tblMediList.getModel();
+//            model.setRowCount(0);
+//
+//            Object[] row = new Object[7];
+//            while (rs.next()) {
+//                row[0] = rs.getInt(1)
+//            }
+//            tblMediList.setMode1(DbUtils.resultSetToTableMode1(Rs));
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    // Get company list
+    public void getCompanyList() {
+        try {
+            Statement stat = Con.createStatement();
+            String selectQuery = "select compName from company";
+            ResultSet rs = stat.executeQuery(selectQuery);
+
+            while (rs.next()) {
+                cmbCompany.addItem(rs.getString("compName"));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    // Get medicine list as an array list
+    public ArrayList<Models.Medicine> getMedList() {
+        ArrayList<Models.Medicine> medList = new ArrayList<>();
+
+        try {
+            Statement st = Con.createStatement();
+            String query1 = "select * from medicine";
+            ResultSet Res = st.executeQuery(query1);
+            Models.Medicine med;
+            while (Res.next()) {
+                med = new Models.Medicine();
+                med.setMedID(Res.getInt("medID"));
+                med.setMedName(Res.getString("medName"));
+                med.setMedPrice(Res.getFloat("medPrice"));
+                med.setMedQTY(Res.getInt("medQTY"));
+                med.setMedFAB(Res.getDate("medFAB"));
+                med.setMedEXP(Res.getDate("medEXP"));
+                med.setMedComp(Res.getString("medComp"));
+                medList.add(med);
+            }
+            return medList;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    // Show medicine list in the table
+    public void showMedicineList() {
+        ArrayList<Models.Medicine> list = getMedList();
+        DefaultTableModel model = (DefaultTableModel) tblMediList.getModel();
+        model.setRowCount(0);
+        Object[] row = new Object[7];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getMedID();
+            row[1] = list.get(i).getMedName();
+            row[2] = list.get(i).getMedPrice();
+            row[3] = list.get(i).getMedQTY();
+            row[4] = list.get(i).getMedFAB();
+            row[5] = list.get(i).getMedEXP();
+            row[6] = list.get(i).getMedComp();
+            model.addRow(row);
+        }
+    }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -45,24 +123,28 @@ public void selectMed()
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton4 = new javax.swing.JButton();
+        txtMedQTY = new javax.swing.JTextField();
+        txtMedName = new javax.swing.JTextField();
+        txtMedPrice = new javax.swing.JTextField();
+        cmbCompany = new javax.swing.JComboBox<>();
+        btnUpdate = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        MedicineTable = new javax.swing.JTable();
+        tblMediList = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
+        cmbFabM = new javax.swing.JComboBox<>();
+        cmbFabY = new javax.swing.JComboBox<>();
+        txtFabD = new javax.swing.JTextField();
+        cmbExpY = new javax.swing.JComboBox<>();
+        cmbExpM = new javax.swing.JComboBox<>();
+        txtExpD = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -84,10 +166,6 @@ public void selectMed()
         jLabel6.setFont(new java.awt.Font("Gadugi", 1, 16)); // NOI18N
         jLabel6.setText("Med Name");
 
-        jLabel7.setBackground(new java.awt.Color(204, 255, 255));
-        jLabel7.setFont(new java.awt.Font("Gadugi", 1, 16)); // NOI18N
-        jLabel7.setText("ID");
-
         jLabel8.setBackground(new java.awt.Color(204, 255, 255));
         jLabel8.setFont(new java.awt.Font("Gadugi", 1, 16)); // NOI18N
         jLabel8.setText("Price");
@@ -108,57 +186,19 @@ public void selectMed()
         jLabel12.setFont(new java.awt.Font("Gadugi", 1, 16)); // NOI18N
         jLabel12.setText("EXP Date");
 
-        jTextField1.setText("hgh");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
+        txtMedName.setToolTipText("dfgfdg");
 
-        jTextField2.setText("hgf");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-
-        jTextField3.setText("jgm");
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
-
-        jTextField4.setText("gf");
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
-            }
-        });
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-
-        jButton4.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
-        jButton4.setText("UPDATE");
-        jButton4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102)));
-        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnUpdate.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
+        btnUpdate.setText("UPDATE");
+        btnUpdate.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102)));
+        btnUpdate.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton4MouseClicked(evt);
-            }
-        });
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnUpdateMouseClicked(evt);
             }
         });
 
-        MedicineTable.setFont(new java.awt.Font("Gadugi", 0, 14)); // NOI18N
-        MedicineTable.setModel(new javax.swing.table.DefaultTableModel(
+        tblMediList.setFont(new java.awt.Font("Gadugi", 0, 14)); // NOI18N
+        tblMediList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -169,12 +209,12 @@ public void selectMed()
                 "ID", "MEDNAME", "MEDPRICE", "QUANTITY", "FABDATE", "EXPDATE", "COMPANY"
             }
         ));
-        MedicineTable.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblMediList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                MedicineTableMouseClicked(evt);
+                tblMediListMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(MedicineTable);
+        jScrollPane1.setViewportView(tblMediList);
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
         jLabel13.setFont(new java.awt.Font("Gadugi", 1, 26)); // NOI18N
@@ -182,62 +222,49 @@ public void selectMed()
         jLabel13.setText("   List Of Medicines");
         jLabel13.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0), java.awt.Color.black, java.awt.Color.black));
 
-        jButton5.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
-        jButton5.setText("DELETE");
-        jButton5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102)));
-        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnDelete.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
+        btnDelete.setText("DELETE");
+        btnDelete.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102)));
+        btnDelete.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton5MouseClicked(evt);
-            }
-        });
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnDeleteMouseClicked(evt);
             }
         });
 
-        jButton6.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
-        jButton6.setText("ADD");
-        jButton6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102)));
-        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAdd.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
+        btnAdd.setText("ADD");
+        btnAdd.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102)));
+        btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton6MouseClicked(evt);
-            }
-        });
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnAddMouseClicked(evt);
             }
         });
 
-        jButton7.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
-        jButton7.setText("CLEAR");
-        jButton7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102)));
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+        btnClear.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
+        btnClear.setText("CLEAR");
+        btnClear.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102)));
+        btnClear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnClearMouseClicked(evt);
             }
         });
+
+        cmbFabM.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
+
+        cmbFabY.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030" }));
+
+        cmbExpY.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030" }));
+
+        cmbExpM.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(210, 210, 210))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44))))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(311, 311, 311)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -245,74 +272,97 @@ public void selectMed()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtMedName, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMedQTY, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMedPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(101, 101, 101)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cmbFabY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbFabM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtFabD, javax.swing.GroupLayout.PREFERRED_SIZE, 35, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(100, 100, 100)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cmbCompany, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(118, 118, 118)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(cmbExpY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbExpM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtExpD, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)))
+                        .addGap(251, 251, 251))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(328, 328, 328)
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(175, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(311, 311, 311)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(251, 251, 251))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 752, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(85, 85, 85))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(91, 91, 91)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtMedName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtMedPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtMedQTY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmbFabY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbFabM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFabD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(19, 19, 19)
-                        .addComponent(jLabel12)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12)
+                            .addComponent(cmbExpY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbExpM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtExpD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cmbCompany, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(34, 34, 34)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5)
-                    .addComponent(jButton7))
+                    .addComponent(btnAdd)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnDelete)
+                    .addComponent(btnClear))
                 .addGap(72, 72, 72)
                 .addComponent(jLabel13)
                 .addGap(18, 18, 18)
@@ -391,122 +441,122 @@ public void selectMed()
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+    private void btnAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseClicked
+//        FDate = FabDate.getdate();
+//        MyFabdate = new java.sql.Date(FDate.getTime());
+//        FDate = ExpDate.getDate();
+//        MyExpDate = new java.sql.Date(EDate.getTime());
+        String MyFabDate = cmbFabY.getSelectedItem().toString() + "-" + cmbFabM.getSelectedItem().toString() + "-" + txtFabD.getText();
+        String MyExpDate = cmbExpY.getSelectedItem().toString() + "-" + cmbExpM.getSelectedItem().toString() + "-" + txtExpD.getText();
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
-
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
-    private void jButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseClicked
-      FDate = FabDate.getdate();
-      MyFabdate = new java.sql.Date(FDate.getTime());
-      FDate = ExpDate.getDate();
-      MyExpDate = new java.sql.Date(EDate.getTime());
-        try{
-            Con = DriverManager.getConnection("jdbc:derby://localhost:1527/Pharmadb","User1","1234");
-            PreparedStatement add = Con.prepareStatement("insert into MEDICINETBL values(?,?,?,?,?,?,?)");
-            add.setInt(1, Integer.valueOf(MedId.getText()));
-            add.setString(2, MedName.getText());
-            add.setInt(3, Integer.valueOf(MedPrice.getText()));
-            add.setInt(4, Integer.valueOf(MedQty.getText()));
-            add.setDate(5, MyFabDate);
-            add.setDate(6, MyExpDate);
-            add.setString(7, CompCb,getSelectedItem().toString());
+        try {
+//            Con = DriverManager.getConnection("jdbc:derby://localhost:1527/Pharmadb", "User1", "1234");
+            PreparedStatement add = Con.prepareStatement("insert into medicine (medName, medPrice, medQTY, medFAB, medEXP, medComp) values(?,?,?,?,?,?)");
+//            add.setInt(1, Integer.valueOf(txtMedID.getText()));
+            add.setString(1, txtMedName.getText());
+            add.setFloat(2, Integer.valueOf(txtMedPrice.getText()));
+            add.setInt(3, Integer.valueOf(txtMedQTY.getText()));
+            add.setString(4, MyFabDate);
+            add.setString(5, MyExpDate);
+            add.setString(6, cmbCompany.getSelectedItem().toString());
             int row = add.executeUpdate();
             JOptionPane.showMessageDialog(this, "Medicine Successfully Added");
-            Con.close();
-            selectMed();
-        }
-        catch(SQLException e)
-        {
+//            Con.close();
+            showMedicineList();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-    }//GEN-LAST:event_jButton6MouseClicked
+    }//GEN-LAST:event_btnAddMouseClicked
 
-    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
-       if(MedId.getText().isEmpty())
-       {
-           JOptionPane.showMessageDialog(this, "Enter The Medicine To Be Deleted");
-       }
-       else{
-           try{
-               Con = DriverManager.getConnection("jdbc:derby://localhost:1527/Pharmadb","User1","1234");
-               String Id = MedId.getText();
-               String Query = "Delete from User1.MEDICINETBL where MEDID-"+Id;
-               Statement Add = Con.createStatement();
-               Add.executeUpdate(Query);
-               SelectMed();
-               JOptionPane.showMessageDialog(this, "Medicine Deleted Successfully");
-           }catch(SQLException e)
-           {
-               e.printstackTrace();
-           }
-       }
-    }//GEN-LAST:event_jButton5MouseClicked
-
-    private void MedicineTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MedicineTableMouseClicked
-        DefaultTableModel model = (DefaultTableModel)MedicineTable.getMode1();
-        int Myindex = MedicineTable.getSelectedRow();
-        MedId.setText = (model.getValueAt(Myindex, 0).toString());
-        MedName.setText = (model.getValueAt(Myindex, 1).toString());
-        MedPrice.setText = (model.getValueAt(Myindex, 2).toString());
-        MedQty.setText = (model.getValueAt(Myindex, 3).toString());
-    }//GEN-LAST:event_MedicineTableMouseClicked
-
-    private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
-        if(MedId.getText().isEmpty() || MedName.getText().isEmpty()||MedPrice.getText().isEmpty()||MedQty.getText().isEmpty()) 
-        {
-            JOptionPane.showMessageDialog(this, "Missing Information");
-        }
-        else
-        {
-            try{
-                FDate = FabDate.getdate();
-      MyFabdate = new java.sql.Date(FDate.getTime());
-      FDate = ExpDate.getDate();
-      MyExpDate = new java.sql.Date(EDate.getTime());
-                Con = DriverManager.getConnection("jdbc:derby://localhost:1527/Pharmadb","User1","1234");
-  String UpdateQuery = "Update User1.MEDICINETBL set MEDNAME = '"+MedName.getText()+"'"+",MEDPRICE = "+MEDPRICE.getText()+""+",MEDQTY = "+MedQty.getText()+""+",MEDFAB = '"+MyFabDate+"'"+",MEDEXP = '"+MyExpDate+"'"+",MEDCOMP = '"+CompCb.getSelectedItem().tostring()+"'"+"where MEDID = "+MedId.getText();
-            Statement Add = Con.createStatement();
-            Add.executeUpdate(UpdateQuery);
-            JOptionPane.showMessageDialog(this, "Medicine Updated Successfully");
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
+    private void btnDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseClicked
+        if (selectedMedID.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No medicine selected.");
+        } else {
+            try {
+//                Con = DriverManager.getConnection("jdbc:derby://localhost:1527/Pharmadb", "User1", "1234");
+//                String Id = txtMedID.getText();
+                String Query = "delete from medicine where medID = " + selectedMedID;
+                Statement Add = Con.createStatement();
+                Add.executeUpdate(Query);
+                showMedicineList();
+                JOptionPane.showMessageDialog(this, "Medicine Deleted Successfully");
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
             }
         }
-        SelectMed();
-    }//GEN-LAST:event_jButton4MouseClicked
+    }//GEN-LAST:event_btnDeleteMouseClicked
+
+    private void tblMediListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMediListMouseClicked
+        DefaultTableModel model = (DefaultTableModel) tblMediList.getModel();
+        int Myindex = tblMediList.getSelectedRow();
+//        txtMedID.setText((model.getValueAt(Myindex, 0).toString()));
+        selectedMedID = model.getValueAt(Myindex, 0).toString();
+        txtMedName.setText((model.getValueAt(Myindex, 1).toString()));
+        txtMedPrice.setText((model.getValueAt(Myindex, 2).toString()));
+        txtMedQTY.setText((model.getValueAt(Myindex, 3).toString()));
+        cmbCompany.setSelectedItem(model.getValueAt(Myindex, 6).toString());
+
+        try {
+            String strFabDate = model.getValueAt(Myindex, 4).toString();
+            Date fabDate = new SimpleDateFormat("yyyy-MM-dd").parse(strFabDate);
+
+            cmbFabY.setSelectedItem("20" + (fabDate.getYear() - 100));
+            cmbFabM.setSelectedIndex(fabDate.getMonth());
+            txtFabD.setText(fabDate.getDate() + "");
+
+            String strExpDate = model.getValueAt(Myindex, 5).toString();
+            Date expDate = new SimpleDateFormat("yyyy-MM-dd").parse(strExpDate);
+
+            cmbExpY.setSelectedItem("20" + (expDate.getYear() - 100));
+            cmbExpM.setSelectedIndex(expDate.getMonth());
+            txtExpD.setText(expDate.getDate() + "");
+
+        } catch (ParseException e) {
+
+        }
+
+//        System.out.println(model.getValueAt(Myindex, 4).toString());
+//        System.out.println(model.getValueAt(Myindex, 5).toString());
+    }//GEN-LAST:event_tblMediListMouseClicked
+
+    private void btnUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMouseClicked
+        if (selectedMedID.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No medicine selected.");
+        } else if (txtMedName.getText().isEmpty() || txtMedPrice.getText().isEmpty() || txtMedQTY.getText().isEmpty() || txtExpD.getText().isEmpty() || txtFabD.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Missing Information");
+        } else {
+            try {
+//                FDate = FabDate.getdate();
+//                MyFabdate = new java.sql.Date(FDate.getTime());
+//                FDate = ExpDate.getDate();
+//                MyExpDate = new java.sql.Date(EDate.getTime());
+                String MyFabDate = cmbFabY.getSelectedItem().toString() + "-" + cmbFabM.getSelectedItem().toString() + "-" + txtFabD.getText();
+                String MyExpDate = cmbExpY.getSelectedItem().toString() + "-" + cmbExpM.getSelectedItem().toString() + "-" + txtExpD.getText();
+//                Con = DriverManager.getConnection("jdbc:derby://localhost:1527/Pharmadb", "User1", "1234");
+                String UpdateQuery = "update medicine set medName= '" + txtMedName.getText() + "'" + ", medPrice= " + txtMedPrice.getText() + "" + ", medQTY = " + txtMedQTY.getText() + "" + ", medFAB = '" + MyFabDate + "'" + ", medEXP = '" + MyExpDate + "'" + ", medComp = '" + cmbCompany.getSelectedItem().toString() + "'" + " where medID = " + selectedMedID;
+                Statement Add = Con.createStatement();
+                Add.executeUpdate(UpdateQuery);
+                JOptionPane.showMessageDialog(this, "Medicine Updated Successfully");
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        showMedicineList();
+    }//GEN-LAST:event_btnUpdateMouseClicked
+
+    private void btnClearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClearMouseClicked
+        // TODO add your handling code here:
+        txtMedName.setText("");
+        txtMedPrice.setText("");
+        txtMedQTY.setText("");
+        txtExpD.setText("");
+        txtFabD.setText("");
+        cmbCompany.setSelectedIndex(0);
+        cmbExpM.setSelectedIndex(0);
+        cmbExpY.setSelectedIndex(0);
+        cmbFabM.setSelectedIndex(0);
+        cmbFabY.setSelectedIndex(0);
+    }//GEN-LAST:event_btnClearMouseClicked
 
     /**
      * @param args the command line arguments
@@ -545,12 +595,15 @@ public void selectMed()
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable MedicineTable;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<String> cmbCompany;
+    private javax.swing.JComboBox<String> cmbExpM;
+    private javax.swing.JComboBox<String> cmbExpY;
+    private javax.swing.JComboBox<String> cmbFabM;
+    private javax.swing.JComboBox<String> cmbFabY;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -561,16 +614,17 @@ public void selectMed()
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTable tblMediList;
+    private javax.swing.JTextField txtExpD;
+    private javax.swing.JTextField txtFabD;
+    private javax.swing.JTextField txtMedName;
+    private javax.swing.JTextField txtMedPrice;
+    private javax.swing.JTextField txtMedQTY;
     // End of variables declaration//GEN-END:variables
 
     private Object getSelectedItem() {
