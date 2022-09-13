@@ -4,6 +4,15 @@
  */
 package pharmacy.system;
 
+import Models.DbConnection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.Connection;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author SENURI
@@ -12,12 +21,15 @@ public class Company extends javax.swing.JFrame {
 
     public Company() {
         initComponents();
-        SelectMed();
+        SelectCom();
     }
-    
-    Connection Con = null;
+
+//    Connection Con = null;
     Statement St = null;
-    ResultSet Ra = null;
+    ResultSet rs = null;
+    DbConnection dbconn = new DbConnection();
+    Connection Con = dbconn.getDbConnection();
+    String selectedComID = "";
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -27,16 +39,13 @@ public class Company extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         CompName_Txt = new javax.swing.JTextField();
-        CompID_Txt = new javax.swing.JTextField();
         CompAddress_Txt = new javax.swing.JTextField();
         Update_Btn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        Company_Tbl = new javax.swing.JTable();
+        companyTable = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
         Delete_Btn = new javax.swing.JButton();
         Add_Btn = new javax.swing.JButton();
@@ -63,14 +72,6 @@ public class Company extends javax.swing.JFrame {
         jLabel5.setText("   Manage Company");
         jLabel5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), null));
 
-        jLabel6.setBackground(new java.awt.Color(204, 255, 255));
-        jLabel6.setFont(new java.awt.Font("Gadugi", 1, 16)); // NOI18N
-        jLabel6.setText("ID");
-
-        jLabel7.setBackground(new java.awt.Color(204, 255, 255));
-        jLabel7.setFont(new java.awt.Font("Gadugi", 1, 16)); // NOI18N
-        jLabel7.setText("ID");
-
         jLabel8.setBackground(new java.awt.Color(204, 255, 255));
         jLabel8.setFont(new java.awt.Font("Gadugi", 1, 16)); // NOI18N
         jLabel8.setText("Address");
@@ -82,12 +83,6 @@ public class Company extends javax.swing.JFrame {
         CompName_Txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CompName_TxtActionPerformed(evt);
-            }
-        });
-
-        CompID_Txt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CompID_TxtActionPerformed(evt);
             }
         });
 
@@ -111,8 +106,8 @@ public class Company extends javax.swing.JFrame {
             }
         });
 
-        Company_Tbl.setFont(new java.awt.Font("Gadugi", 0, 14)); // NOI18N
-        Company_Tbl.setModel(new javax.swing.table.DefaultTableModel(
+        companyTable.setFont(new java.awt.Font("Gadugi", 0, 14)); // NOI18N
+        companyTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -120,15 +115,15 @@ public class Company extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Name", "Address", "Phone no"
             }
         ));
-        Company_Tbl.addMouseListener(new java.awt.event.MouseAdapter() {
+        companyTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Company_TblMouseClicked(evt);
+                companyTableMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(Company_Tbl);
+        jScrollPane1.setViewportView(companyTable);
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
         jLabel13.setFont(new java.awt.Font("Gadugi", 1, 26)); // NOI18N
@@ -195,15 +190,12 @@ public class Company extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(56, 56, 56)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(CompName_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(CompAddress_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -222,8 +214,7 @@ public class Company extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(Delete_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(CompID_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jLabel11)))
                         .addGap(18, 18, 18)
                         .addComponent(Clear_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -254,14 +245,9 @@ public class Company extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(104, 104, 104)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
                             .addComponent(CompName_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10))
-                        .addGap(8, 8, 8)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(CompID_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel10))))
+                .addGap(36, 36, 36)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addComponent(CompAddress_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -350,10 +336,6 @@ public class Company extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_CompName_TxtActionPerformed
 
-    private void CompID_TxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CompID_TxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CompID_TxtActionPerformed
-
     private void CompAddress_TxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CompAddress_TxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CompAddress_TxtActionPerformed
@@ -378,91 +360,105 @@ public class Company extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_Clear_BtnActionPerformed
 
-    public void SelectMed(){
-        try{
-            Con = DriverManager.getConnection("jdbc:derby://localhost:1527/Pharmadb", "User1", "1234");
+    public void SelectCom() {
+        try {
+//            Con = DriverManager.getConnection("jdbc:derby://localhost:1527/Pharmadb", "User1", "1234");
             St = Con.createStatement();
-            Rs = St.executeQuery("Select * from User1.COMPANYTBL");
-            Company_Tbl.setModel(DbUtils.resultSetToTableModel(Rs));
-        }catch(SQLException e)
-        {
-            e.printStackTrace();
+            rs = St.executeQuery("select * from company");
+//            companyTable.setModel(DbUtils.resultSetToTableModel(Rs));
+            DefaultTableModel model = (DefaultTableModel) companyTable.getModel();
+            model.setRowCount(0);
+            Object[] row = new Object[4];
+            while (rs.next()) {
+                row[0] = rs.getInt("compID");
+                row[1] = rs.getString("compName");
+                row[2] = rs.getString("compAddress");
+                row[3] = rs.getString("compPhone");
+
+                model.addRow(row);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
-    
+
     private void Add_BtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Add_BtnMouseClicked
-        try{
-            Con = DriverManager.getConnection("jdbc:derby://localhost:1527/Pharmadb","User1","1234");
-            PreparedStatement add = Con.prepareStatement("insert into COMPANYTBL values(?, ?, ?, ?)");
-            add.setInt(1, Integer.valueOf(CompID_Txt.getText()));
-            add.setString(2, CompName_Txt.getText());
-            add.setInt(3, CompAddress_Txt.getText());
-            add.setInt(4, CompPhone_Txt.getText());
-            int row = add.executeUpdate();
-            JOptionPane.showMessageDialog(this, "Company Successfully Added");
-            Con.close();
-            SelectMed();
+        if (CompName_Txt.getText().isEmpty() || CompAddress_Txt.getText().isEmpty() || CompPhone_Txt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Missing Information.");
+        } else {
+            try {
+//            Con = DriverManager.getConnection("jdbc:derby://localhost:1527/Pharmadb", "User1", "1234");
+                PreparedStatement add = Con.prepareStatement("insert into company (compName, compAddress, compPhone) values(?, ?, ?)");
+//            add.setInt(1, Integer.valueOf(CompID_Txt.getText()));
+                add.setString(1, CompName_Txt.getText());
+                add.setString(2, CompAddress_Txt.getText());
+                add.setString(3, CompPhone_Txt.getText());
+                int row = add.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Company Successfully Added");
+//            Con.close();
+                SelectCom();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
-    } 
+
     }//GEN-LAST:event_Add_BtnMouseClicked
 
     private void Delete_BtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Delete_BtnMouseClicked
-        if(CompId.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Enter the company to be deleted");
-        }
-        else{
-            try{
-                Con = DriverManager.getConnection("jdbc:derby://localhost:1527/Pharmadb", "User1", "1234");
-                String Id = CompId.getText();
-                String Query = "Delete from User1.COMPANYTBL Where COMPID="+Id;
+        if (selectedComID.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Select the company to be deleted");
+        } else {
+            try {
+//                Con = DriverManager.getConnection("jdbc:derby://localhost:1527/Pharmadb", "User1", "1234");
+//                String Id = CompID_Txt.getText();
+                String Query = "delete from company where compID=" + selectedComID;
                 Statement Add = Con.createStatement();
                 Add.executeUpdate(Query);
-                SelectMed();
-                JOptionPane.showMessageDialog(this, "Company Deleted Successfully");    
-            }
-            catch(SQLException e){
+                SelectCom();
+                JOptionPane.showMessageDialog(this, "Company Deleted Successfully");
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }//GEN-LAST:event_Delete_BtnMouseClicked
 
     private void Update_BtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Update_BtnMouseClicked
-        if(CompId.getText().isEmpty() || Compname.getText().isEmpty() || Compadd.getText().isEmpty() || Compphone().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Missing Information");
-        }
-        else{
-            try{
-                Con = DriverManager.getConnection("jdbc:derby://localhost:1527/Pharmadb", "User1", "1234");
-                String UpdateQuery = "Update User1.COMPANYTBL set COMPNAME = '"+Compname.getText()+"'"+",COMPADD = '"+Compadd.getText()+"'"+",COMPPHONE = '"+Compphone.getText()+"'"+" where COMPID = "+CompId.getText();
+        if (selectedComID.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No company selected.");
+        } else if (CompName_Txt.getText().isEmpty() || CompAddress_Txt.getText().isEmpty() || CompPhone_Txt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Missing Information.");
+        } else {
+            try {
+//                Con = DriverManager.getConnection("jdbc:derby://localhost:1527/Pharmadb", "User1", "1234");
+                String UpdateQuery = "update company set compName= '" + CompName_Txt.getText() + "'" + ",compAddress = '" + CompAddress_Txt.getText() + "'" + ",compPhone = '" + CompPhone_Txt.getText() + "'" + " where compID = " + selectedComID;
                 Statement Add = Con.createStatement();
                 Add.executeUpdate(UpdateQuery);
-                JOptionPane.showMessageDialog(this, "Company Update Successfully");
-            }
-            catch(SQLException e){
+                JOptionPane.showMessageDialog(this, "Company Update Successfully.");
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
-            SelectMed();
+            SelectCom();
         }
     }//GEN-LAST:event_Update_BtnMouseClicked
 
     private void Clear_BtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Clear_BtnMouseClicked
-        CompId.setText("");
-        Compname.setText("");
-        Compadd.setText("");
-        Compphone.setText("");
+//        CompId.setText("");
+        selectedComID = "";
+        CompName_Txt.setText("");
+        CompAddress_Txt.setText("");
+        CompPhone_Txt.setText("");
     }//GEN-LAST:event_Clear_BtnMouseClicked
 
-    private void Company_TblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Company_TblMouseClicked
-        DefaultTableModel.model = (DefaultTableModel)Company_Tbl.getModel();
-        int Myindex = Company_Tbl.getSelectedRow();
-        CompId.setText(model.getValueAt(Myindex, 0).toString());
-        Compname.setText(model.getValueAt(Myindex, 1).toString());
-        Compadd.setText(model.getValueAt(Myindex, 2).toString());
-        Compphone.setText(model.getValueAt(Myindex, 3).toString());
-    }//GEN-LAST:event_Company_TblMouseClicked
+    private void companyTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_companyTableMouseClicked
+        DefaultTableModel model = (DefaultTableModel) companyTable.getModel();
+//        DefaultTableModel model = (DefaultTableModel).getModel();
+        int Myindex = companyTable.getSelectedRow();
+//        CompId.setText(model.getValueAt(Myindex, 0).toString());
+        selectedComID = model.getValueAt(Myindex, 0).toString();
+        CompName_Txt.setText(model.getValueAt(Myindex, 1).toString());
+        CompAddress_Txt.setText(model.getValueAt(Myindex, 2).toString());
+        CompPhone_Txt.setText(model.getValueAt(Myindex, 3).toString());
+    }//GEN-LAST:event_companyTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -478,16 +474,24 @@ public class Company extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Company.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Company.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Company.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Company.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Company.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Company.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Company.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Company.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -503,12 +507,11 @@ public class Company extends javax.swing.JFrame {
     private javax.swing.JButton Add_Btn;
     private javax.swing.JButton Clear_Btn;
     private javax.swing.JTextField CompAddress_Txt;
-    private javax.swing.JTextField CompID_Txt;
     private javax.swing.JTextField CompName_Txt;
     private javax.swing.JTextField CompPhone_Txt;
-    private javax.swing.JTable Company_Tbl;
     private javax.swing.JButton Delete_Btn;
     private javax.swing.JButton Update_Btn;
+    private javax.swing.JTable companyTable;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
@@ -517,8 +520,6 @@ public class Company extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
