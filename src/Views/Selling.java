@@ -453,24 +453,25 @@ public class Selling extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Missing Information");
         } else {
             // Check the items already added to the list
-            boolean isAdded = false;
-            for (int i = 0; i < addedItems.size(); i++) {
-                System.out.println(addedItems.get(i));
-                if (billItem.getMedID() == addedItems.get(i)) {
-                    isAdded = true;
-                    JOptionPane.showMessageDialog(this, "Already in the bill.");
-                    break;
-                }
-            }
+//            boolean isAdded = false;
+//            for (int i = 0; i < addedItems.size(); i++) {
+//                System.out.println(addedItems.get(i));
+//                if (billItem.getMedID() == addedItems.get(i)) {
+//                    isAdded = true;
+//                    JOptionPane.showMessageDialog(this, "Already in the bill.");
+//                    break;
+//                }
+//            }
 
-            if (!isAdded) {
+//            if (!isAdded) {
+            if (billItem.getQTY() >= Integer.parseInt(txtQTY.getText())) {
                 addedItems.add(billItem.getMedID());
                 // Get entered quantity
                 int QTY = Integer.parseInt(txtQTY.getText());
 
                 // Update available qty
                 medicine.setMedID(billItem.getMedID());
-                medicine.updateQTY(QTY); // Subtract qty from available qty
+//                medicine.updateQTY(QTY); // Subtract qty from available qty
 
                 // Set qty to the bill item
                 billItem.setQTY(QTY);
@@ -497,7 +498,10 @@ public class Selling extends javax.swing.JFrame {
 
                 // Show updated medicine list
                 showMedicineList();
+            } else {
+                JOptionPane.showMessageDialog(this, "Not enough stock.");
             }
+//            }
         }
     }//GEN-LAST:event_btnAddToBillActionPerformed
 
