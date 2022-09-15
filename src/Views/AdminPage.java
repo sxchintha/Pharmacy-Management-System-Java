@@ -154,7 +154,7 @@ public class AdminPage extends javax.swing.JFrame {
         });
 
         UpdateEmp.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
-        UpdateEmp.setIcon(new javax.swing.ImageIcon("C:\\Users\\SENURI\\OneDrive\\Desktop\\INFORMATION SYSTEMS\\Year 2\\1st Semester\\2104 - Rapid Application Development\\Group Project\\update.png")); // NOI18N
+        UpdateEmp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/update.png"))); // NOI18N
         UpdateEmp.setText("UPDATE");
         UpdateEmp.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102)));
         UpdateEmp.addActionListener(new java.awt.event.ActionListener() {
@@ -186,7 +186,7 @@ public class AdminPage extends javax.swing.JFrame {
         jLabel13.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0), java.awt.Color.black, java.awt.Color.black));
 
         DeleteEmp.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
-        DeleteEmp.setIcon(new javax.swing.ImageIcon("C:\\Users\\SENURI\\OneDrive\\Desktop\\INFORMATION SYSTEMS\\Year 2\\1st Semester\\2104 - Rapid Application Development\\Group Project\\add-icon.png")); // NOI18N
+        DeleteEmp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/close-icon (1).png"))); // NOI18N
         DeleteEmp.setText("DELETE");
         DeleteEmp.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102)));
         DeleteEmp.addActionListener(new java.awt.event.ActionListener() {
@@ -196,7 +196,7 @@ public class AdminPage extends javax.swing.JFrame {
         });
 
         AddEmp.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
-        AddEmp.setIcon(new javax.swing.ImageIcon("C:\\Users\\SENURI\\OneDrive\\Desktop\\INFORMATION SYSTEMS\\Year 2\\1st Semester\\2104 - Rapid Application Development\\Group Project\\add-icon.png")); // NOI18N
+        AddEmp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/add-icon.png"))); // NOI18N
         AddEmp.setText("ADD");
         AddEmp.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102)));
         AddEmp.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -357,9 +357,9 @@ public class AdminPage extends javax.swing.JFrame {
         });
         jPanel1.add(changepass, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 175, 45));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\SENURI\\OneDrive\\Desktop\\INFORMATION SYSTEMS\\Year 2\\1st Semester\\2104 - Rapid Application Development\\Group Project\\WhatsApp Image 2022-09-15 at 09.33.40.jpeg")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/WhatsApp Image 2022-09-15 at 09.33.40.jpeg"))); // NOI18N
         jLabel2.setText("img");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, 0, 240, 740));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, 0, 240, 750));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

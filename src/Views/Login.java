@@ -71,7 +71,7 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(txtusername, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 146, 147, -1));
 
         btnCancel.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
-        btnCancel.setIcon(new javax.swing.ImageIcon("C:\\Users\\SENURI\\OneDrive\\Desktop\\INFORMATION SYSTEMS\\Year 2\\1st Semester\\2104 - Rapid Application Development\\Group Project\\cancel.png")); // NOI18N
+        btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cancel.png"))); // NOI18N
         btnCancel.setText("Cancel");
         btnCancel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 0, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102)));
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -82,7 +82,7 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 108, 40));
 
         btnLogin.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
-        btnLogin.setIcon(new javax.swing.ImageIcon("C:\\Users\\SENURI\\OneDrive\\Desktop\\INFORMATION SYSTEMS\\Year 2\\1st Semester\\2104 - Rapid Application Development\\Group Project\\Login.png")); // NOI18N
+        btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Login.png"))); // NOI18N
         btnLogin.setText("Login");
         btnLogin.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102)));
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -93,7 +93,7 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 102, -1));
         jPanel1.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 198, 147, -1));
 
-        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\SENURI\\OneDrive\\Desktop\\INFORMATION SYSTEMS\\Year 2\\1st Semester\\2104 - Rapid Application Development\\Group Project\\user login background.jpg")); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user login background.jpg"))); // NOI18N
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 350));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

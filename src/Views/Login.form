@@ -122,7 +122,7 @@
               <Font name="Serif" size="20" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\SENURI\OneDrive\Desktop\INFORMATION SYSTEMS\Year 2\1st Semester\2104 - Rapid Application Development\Group Project\cancel.png"/>
+              <Image iconType="3" name="/Images/cancel.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Cancel"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -151,7 +151,7 @@
               <Font name="Serif" size="20" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\SENURI\OneDrive\Desktop\INFORMATION SYSTEMS\Year 2\1st Semester\2104 - Rapid Application Development\Group Project\Login.png"/>
+              <Image iconType="3" name="/Images/Login.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Login"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -184,7 +184,7 @@
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\SENURI\OneDrive\Desktop\INFORMATION SYSTEMS\Year 2\1st Semester\2104 - Rapid Application Development\Group Project\user login background.jpg"/>
+              <Image iconType="3" name="/Images/user login background.jpg"/>
             </Property>
           </Properties>
           <Constraints>

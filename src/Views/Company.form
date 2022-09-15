@@ -82,28 +82,24 @@
                               <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="jLabel5" alignment="1" min="-2" pref="289" max="-2" attributes="0"/>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Component id="Add_Btn" min="-2" pref="100" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="Update_Btn" min="-2" pref="112" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="Delete_Btn" min="-2" pref="111" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                  </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="203" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="jLabel5" alignment="1" min="-2" pref="289" max="-2" attributes="0"/>
                                   <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                                      <Component id="Add_Btn" min="-2" pref="100" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="Update_Btn" min="-2" pref="112" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="Delete_Btn" min="-2" pref="111" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                               <Component id="Clear_Btn" min="-2" pref="111" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -225,7 +221,7 @@
                   <Font name="Serif" size="20" style="1"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\SENURI\OneDrive\Desktop\INFORMATION SYSTEMS\Year 2\1st Semester\2104 - Rapid Application Development\Group Project\update.png"/>
+                  <Image iconType="3" name="/Images/update.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="UPDATE"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -328,7 +324,7 @@
                   <Font name="Serif" size="20" style="1"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\SENURI\OneDrive\Desktop\INFORMATION SYSTEMS\Year 2\1st Semester\2104 - Rapid Application Development\Group Project\close-icon (1).png"/>
+                  <Image iconType="3" name="/Images/close-icon (1).png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="DELETE"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -353,7 +349,7 @@
                   <Font name="Serif" size="20" style="1"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\SENURI\OneDrive\Desktop\INFORMATION SYSTEMS\Year 2\1st Semester\2104 - Rapid Application Development\Group Project\add-icon.png"/>
+                  <Image iconType="3" name="/Images/add-icon.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="ADD"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -394,7 +390,7 @@
                   <Font name="Serif" size="20" style="1"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\SENURI\OneDrive\Desktop\INFORMATION SYSTEMS\Year 2\1st Semester\2104 - Rapid Application Development\Group Project\Clear-icon.png"/>
+                  <Image iconType="3" name="/Images/Clear-icon.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="CLEAR"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -449,14 +445,14 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="19" y="203" width="151" height="45"/>
+              <AbsoluteConstraints x="20" y="150" width="151" height="45"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\SENURI\OneDrive\Desktop\INFORMATION SYSTEMS\Year 2\1st Semester\2104 - Rapid Application Development\Group Project\hini.jpg"/>
+              <Image iconType="3" name="/Images/hini.jpg"/>
             </Property>
             <Property name="text" type="java.lang.String" value="jLabel1"/>
           </Properties>

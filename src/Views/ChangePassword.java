@@ -66,7 +66,7 @@ public class ChangePassword extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Gadugi", 1, 16)); // NOI18N
         jLabel1.setText("Password");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 64, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Gadugi", 1, 16)); // NOI18N
         jLabel2.setText("Confirm Password");
@@ -81,8 +81,8 @@ public class ChangePassword extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 200, -1, -1));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\SENURI\\OneDrive\\Desktop\\INFORMATION SYSTEMS\\Year 2\\1st Semester\\2104 - Rapid Application Development\\Group Project\\v870-tang-41.jpg")); // NOI18N
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 300));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user login background.jpg"))); // NOI18N
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 360));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

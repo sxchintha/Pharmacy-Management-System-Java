@@ -199,7 +199,7 @@ public final class Medicine extends javax.swing.JFrame {
         txtMedName.setToolTipText("dfgfdg");
 
         btnUpdate.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
-        btnUpdate.setIcon(new javax.swing.ImageIcon("C:\\Users\\SENURI\\OneDrive\\Desktop\\INFORMATION SYSTEMS\\Year 2\\1st Semester\\2104 - Rapid Application Development\\Group Project\\update.png")); // NOI18N
+        btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/update.png"))); // NOI18N
         btnUpdate.setText("UPDATE");
         btnUpdate.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102)));
         btnUpdate.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -234,7 +234,7 @@ public final class Medicine extends javax.swing.JFrame {
         jLabel13.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0), java.awt.Color.black, java.awt.Color.black));
 
         btnDelete.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
-        btnDelete.setIcon(new javax.swing.ImageIcon("C:\\Users\\SENURI\\OneDrive\\Desktop\\INFORMATION SYSTEMS\\Year 2\\1st Semester\\2104 - Rapid Application Development\\Group Project\\close-icon (1).png")); // NOI18N
+        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/close-icon (1).png"))); // NOI18N
         btnDelete.setText("DELETE");
         btnDelete.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102)));
         btnDelete.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -244,7 +244,7 @@ public final class Medicine extends javax.swing.JFrame {
         });
 
         btnAdd.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
-        btnAdd.setIcon(new javax.swing.ImageIcon("C:\\Users\\SENURI\\OneDrive\\Desktop\\INFORMATION SYSTEMS\\Year 2\\1st Semester\\2104 - Rapid Application Development\\Group Project\\add-icon.png")); // NOI18N
+        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/add-icon.png"))); // NOI18N
         btnAdd.setText("ADD");
         btnAdd.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102)));
         btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -254,7 +254,7 @@ public final class Medicine extends javax.swing.JFrame {
         });
 
         btnClear.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
-        btnClear.setIcon(new javax.swing.ImageIcon("C:\\Users\\SENURI\\OneDrive\\Desktop\\INFORMATION SYSTEMS\\Year 2\\1st Semester\\2104 - Rapid Application Development\\Group Project\\Clear-icon.png")); // NOI18N
+        btnClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Clear-icon.png"))); // NOI18N
         btnClear.setText("CLEAR");
         btnClear.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102)));
         btnClear.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -407,9 +407,9 @@ public final class Medicine extends javax.swing.JFrame {
                 jLabel4MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 183, -1, 39));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, -1, 39));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\SENURI\\OneDrive\\Desktop\\INFORMATION SYSTEMS\\Year 2\\1st Semester\\2104 - Rapid Application Development\\Group Project\\v870-tang-41.jpg")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/hini.jpg"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 690));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
