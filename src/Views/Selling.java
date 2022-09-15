@@ -24,7 +24,7 @@ import Views.ChangePassword;
  * @author SENURI
  */
 public class Selling extends javax.swing.JFrame {
-
+    
     Bill newBill = new Bill();
     Bill_Item billItem;
     Medicine medicine = new Medicine();
@@ -44,7 +44,7 @@ public class Selling extends javax.swing.JFrame {
         showMedicineList();
         lblDate.setText(date.toString());
     }
-
+    
     public Selling(int userID) {
         initComponents();
         showMedicineList();
@@ -55,7 +55,7 @@ public class Selling extends javax.swing.JFrame {
     // Get medicine list as an array list
     public ArrayList<Medicine> getMedList() {
         ArrayList<Medicine> medList = new ArrayList<>();
-
+        
         DbConnection dbconn = new DbConnection();
         Connection mycon = dbconn.getDbConnection();
         try {
@@ -131,6 +131,7 @@ public class Selling extends javax.swing.JFrame {
         lblTotalBill = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -174,7 +175,6 @@ public class Selling extends javax.swing.JFrame {
         });
 
         btnPrint.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
-        btnPrint.setIcon(new javax.swing.ImageIcon("C:\\Users\\SENURI\\OneDrive\\Desktop\\INFORMATION SYSTEMS\\Year 2\\1st Semester\\2104 - Rapid Application Development\\Group Project\\printer-icon.png")); // NOI18N
         btnPrint.setText("PRINT");
         btnPrint.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102), new java.awt.Color(0, 51, 102)));
         btnPrint.addActionListener(new java.awt.event.ActionListener() {
@@ -293,7 +293,7 @@ public class Selling extends javax.swing.JFrame {
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(254, 254, 254))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(56, 56, 56)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,13 +306,13 @@ public class Selling extends javax.swing.JFrame {
                                     .addComponent(txtMedName, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtQTY, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(39, 39, 39))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addComponent(btnAddToBill, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -324,7 +324,7 @@ public class Selling extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addGap(42, 42, 42)
                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(874, Short.MAX_VALUE)))
+                    .addContainerGap(857, Short.MAX_VALUE)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -348,7 +348,7 @@ public class Selling extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(51, 51, 51)
                         .addComponent(lblDate, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13)
                             .addComponent(jButton1))
@@ -381,6 +381,16 @@ public class Selling extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 139, 39));
+
+        jLabel6.setBackground(new java.awt.Color(0, 0, 255));
+        jLabel6.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
+        jLabel6.setText("Profile");
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 151, 45));
 
         jLabel4.setBackground(new java.awt.Color(0, 0, 255));
         jLabel4.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
@@ -450,7 +460,7 @@ public class Selling extends javax.swing.JFrame {
 
                 // Update available qty
                 medicine.setMedID(billItem.getMedID());
-//                medicine.updateQTY(QTY); // Subtract qty from available qty
+                medicine.updateQTY(QTY); // Subtract qty from available qty
 
                 // Set qty to the bill item
                 billItem.setQTY(QTY);
@@ -493,7 +503,7 @@ public class Selling extends javax.swing.JFrame {
 
         // Set medicine name in the text box
         txtMedName.setText(model.getValueAt(rowIndex, 1).toString());
-
+        
         billItem = new Bill_Item();
         billItem.setMedID(Integer.parseInt(model.getValueAt(rowIndex, 0).toString()));
         billItem.setMedName(model.getValueAt(rowIndex, 1).toString());
@@ -520,6 +530,7 @@ public class Selling extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        new PreviousBills().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
@@ -530,7 +541,13 @@ public class Selling extends javax.swing.JFrame {
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
+        new Login().setVisible(true);
     }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        // TODO add your handling code here:
+        new UserProfile(userID).setVisible(true);
+    }//GEN-LAST:event_jLabel6MouseClicked
 
     /**
      * @param args the command line arguments
@@ -580,6 +597,7 @@ public class Selling extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;

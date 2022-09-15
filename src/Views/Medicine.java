@@ -439,7 +439,7 @@ public final class Medicine extends javax.swing.JFrame {
             PreparedStatement add = Con.prepareStatement("insert into medicine (medName, medPrice, medQTY, medFAB, medEXP, medComp) values(?,?,?,?,?,?)");
 //            add.setInt(1, Integer.valueOf(txtMedID.getText()));
             add.setString(1, txtMedName.getText());
-            add.setFloat(2, Integer.valueOf(txtMedPrice.getText()));
+            add.setFloat(2, Float.valueOf(txtMedPrice.getText()));
             add.setInt(3, Integer.valueOf(txtMedQTY.getText()));
             add.setString(4, MyFabDate);
             add.setString(5, MyExpDate);
