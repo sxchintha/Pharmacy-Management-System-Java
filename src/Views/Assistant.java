@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
  * @author SENURI
  */
 public class Assistant extends javax.swing.JFrame {
-
+    int userID;
     /**
      * Creates new form Agents
      */
@@ -30,6 +30,7 @@ public class Assistant extends javax.swing.JFrame {
     public Assistant(int userID) {
         initComponents();
         showCustomers();
+        this.userID = userID;
     }
     
     Statement st = null;
@@ -87,6 +88,7 @@ public class Assistant extends javax.swing.JFrame {
         btnAdd = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         txtPhone = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -280,20 +282,30 @@ public class Assistant extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 0, 750, 770));
 
+        jLabel9.setBackground(new java.awt.Color(0, 0, 255));
+        jLabel9.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
+        jLabel9.setText("Profile");
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 151, 45));
+
         jLabel2.setBackground(new java.awt.Color(0, 0, 255));
-        jLabel2.setFont(new java.awt.Font("Gadugi", 1, 25)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
         jLabel2.setText("Change Password");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 210, 39));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 210, 39));
 
         jLabel4.setBackground(new java.awt.Color(0, 0, 255));
-        jLabel4.setFont(new java.awt.Font("Gadugi", 1, 25)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
         jLabel4.setText("Log Out");
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel4MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 124, 45));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 124, 45));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/hini.jpg"))); // NOI18N
         jLabel1.setText("img");
@@ -403,6 +415,11 @@ public class Assistant extends javax.swing.JFrame {
         new Login().setVisible(true);
     }//GEN-LAST:event_jLabel4MouseClicked
 
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+        // TODO add your handling code here:
+        new UserProfile(userID).setVisible(true);
+    }//GEN-LAST:event_jLabel9MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -455,6 +472,7 @@ public class Assistant extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
