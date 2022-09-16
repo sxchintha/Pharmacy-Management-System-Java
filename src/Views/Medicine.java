@@ -263,6 +263,11 @@ public final class Medicine extends javax.swing.JFrame {
                 btnAddMouseClicked(evt);
             }
         });
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnClear.setFont(new java.awt.Font("Serif", 1, 20)); // NOI18N
         btnClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Clear-icon.png"))); // NOI18N
@@ -573,6 +578,10 @@ public final class Medicine extends javax.swing.JFrame {
         // TODO add your handling code here:
         new UserProfile(userID).setVisible(true);
     }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddActionPerformed
 
     /**
      * @param args the command line arguments

@@ -433,6 +433,7 @@ public class Selling extends javax.swing.JFrame {
         // TODO add your handling code here:
         txtMedName.setText("");
         txtQTY.setText("");
+        txtBillText.setText("");
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnAddToBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToBillActionPerformed
